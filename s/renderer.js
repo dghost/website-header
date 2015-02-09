@@ -1,17 +1,31 @@
-if ( Detector.webgl && !(Mobile.isMobile)) {
-  window.addEventListener("load", function() {
-    init();
-    animate();
-  }, false);
-}
 var rendercanvas, outerDiv;
 var camera, scene, renderer;
 var uniforms, clock;
 var timeScale = 1.0;
 
-var shaders = [worleyShader, flowShader, fbmShader];
+window.addEventListener("load", function() {
+  init();
+  animate();
+}, false);
 
 function init() {
+  shaders = [];
+  if (worleyShader) {
+    shaders.push(worleyShader);
+  }
+
+  if (flowShader) {
+    shaders.push(flowShader);
+  }
+
+  if (fbmShader) {
+    shaders.push(fbmShader);
+  }
+
+  if (shaders.length === 0 || !THREE) {
+    return;
+  }
+
   outerDiv = document.getElementsByClassName("sqs-announcement-bar-dropzone")[0];
   rendercanvas = document.createElement("canvas");
   rendercanvas.id = "render-canvas";
@@ -29,10 +43,13 @@ function init() {
     time: { type: "f", value: 1.0 },
     scale: { type: "f", value: 1.0 }
   };
+
+  var shaders = [worleyShader, flowShader, fbmShader];
+  var fragmentShader = shaders[Math.floor(shaders.length * Math.random())];
   var material = new THREE.ShaderMaterial( {
     uniforms: uniforms,
     vertexShader: vertexShader,
-    fragmentShader: shaders[Math.floor(shaders.length * Math.random())]
+    fragmentShader: fragmentShader
   } );
   var mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
@@ -40,7 +57,7 @@ function init() {
   renderer.setPixelRatio( window.devicePixelRatio );
   onWindowResize();
   window.addEventListener( 'resize', onWindowResize, false );
-  clock = new THREE.Clock()
+  clock = new THREE.Clock();
 }
 function onWindowResize( event ) {
   rendercanvas.width = outerDiv.offsetWidth;

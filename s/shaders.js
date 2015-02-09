@@ -42,7 +42,7 @@ var fbmShader =
    "v+=.25*abs(s(y*4.));" +
    "v+=.125*abs(s(y*8.));" +
    "gl_FragColor=vec4(vec3(1.-v*.2),1.);" +
- "}"
+ "}";
 
 var flowShader =
  "uniform float time,scale;\n" +
@@ -80,7 +80,7 @@ var flowShader =
    "vec2 y,x,d=gl_FragCoord.xy*(scale/125.);" +
    "float v=time*.4,s=t(d*.5,.2*v,y),C=t(d*2.+y*.5,.51*v,x),z=t(d*4.+y*.5+x*.25,.77*v,x),e=.9+(s+.75*C+.5*z)*.2;" +
    "gl_FragColor=vec4(vec3(e),1.);" +
- "}"
+ "}";
 
 var worleyShader =
  "uniform float time,scale;" +
@@ -135,11 +135,10 @@ var worleyShader =
    "float r=d.y-d.x;" +
    "vec3 y=vec3(1.-r*.2);" +
    "gl_FragColor=vec4(y,1.);" +
- "}"
+ "}";
 
 var vertexShader =
  "void main()" +
  "{" +
    "gl_Position=vec4(position,1.);" +
- "}"
-
+ "}";
