@@ -3,6 +3,9 @@ var camera, scene, renderer;
 var uniforms, clock;
 var timeScale = 1.0;
 
+// var pixelRatio = window.devicePixelRatio;
+var pixelRatio = 1.0;
+
 window.addEventListener("load", function() {
   init();
   animate();
@@ -54,7 +57,7 @@ function init() {
   var mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
   renderer = new THREE.WebGLRenderer({canvas: rendercanvas});
-  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setPixelRatio( pixelRatio );
   onWindowResize();
   window.addEventListener( 'resize', onWindowResize, false );
   clock = new THREE.Clock();
@@ -63,7 +66,7 @@ function onWindowResize( event ) {
   rendercanvas.width = outerDiv.offsetWidth;
   rendercanvas.height = outerDiv.offsetHeight;
   renderer.setSize( outerDiv.offsetWidth, outerDiv.offsetHeight );
-  uniforms.scale.value = 1.0 / window.devicePixelRatio;
+  uniforms.scale.value = 1.0 / pixelRatio;
 }
 function animate() {
   requestAnimationFrame( animate );
